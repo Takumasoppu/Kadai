@@ -19,7 +19,7 @@ public class BulletController : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        _rd2b.velocity = new Vector2(0, 50f);
+        _rd2b.velocity = new Vector2(0, 20f);
     }
 
 

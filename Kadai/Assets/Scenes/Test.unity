@@ -169,6 +169,8 @@ MonoBehaviour:
   _generateObject: {fileID: 6172414587786472738, guid: 75c62e976cb2bb845b26a9d9be5795a2, type: 3}
   _maxCount: 0
   _firstCount: 3000
+  intArray: 
+  BulletPos: []
 --- !u!1 &753144226
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +183,6 @@ GameObject:
   - component: {fileID: 753144227}
   - component: {fileID: 753144229}
   - component: {fileID: 753144230}
-  - component: {fileID: 753144231}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -269,7 +270,6 @@ MonoBehaviour:
   _leftInput: {x: 0, y: 0}
   _oP: {fileID: 1200969807}
   _shotInterval: 0.06
-  _playerPos: {x: 0, y: 0}
 --- !u!50 &753144230
 Rigidbody2D:
   serializedVersion: 4
@@ -291,18 +291,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &753144231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 753144226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d436b3914cd4204caa1a1260d062a11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1115215031
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,6 +420,8 @@ MonoBehaviour:
   _generateObject: {fileID: 1523949917141481450, guid: 9ccf7e645b0c4f14696c9920a814a63c, type: 3}
   _maxCount: 0
   _firstCount: 50
+  intArray: 
+  BulletPos: []
 --- !u!1 &1528393448
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +435,6 @@ GameObject:
   - component: {fileID: 1528393452}
   - component: {fileID: 1528393451}
   - component: {fileID: 1528393453}
-  - component: {fileID: 1528393454}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -555,17 +544,18 @@ MonoBehaviour:
   _enemySpeedx: 4
   _enemySpeedy: -5
   _enemySlowlySpeed: -0.3
-  _enemyPosition: {x: 0, y: 0}
+  _enemyPosition: {x: 0, y: 0, z: 0}
   _player: {fileID: 753144226}
   _enemyHp: 0
   _stopTime: 1
   _activeTime: 0
-  _deleteTime: 0.3
+  _deleteTime: 0
   _shotInterval: 5
-  _deathSpeed: {x: 0, y: 0}
-  _receiveBullet: {fileID: 1523949917141481450, guid: 9ccf7e645b0c4f14696c9920a814a63c, type: 3}
-  _enemyRadius: 0
-  _bulletRadius: 0
+  _objPoolList: []
+  _receiveBullet: {fileID: 1200969805}
+  _hitArea: 1
+  _v3Delta: {x: 0, y: 0, z: 0}
+  _fDistanceSq: 0
 --- !u!58 &1528393453
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -573,7 +563,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1528393448}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -582,18 +572,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.058358192
---- !u!114 &1528393454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1528393448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d436b3914cd4204caa1a1260d062a11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1680754133
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,3 +618,5 @@ MonoBehaviour:
   _pC: {fileID: 753144229}
   _eC: {fileID: 1528393452}
   _eBc: {fileID: 0}
+  _objPoolScript: {fileID: 1200969807}
+  _objPool: {fileID: 1200969805}

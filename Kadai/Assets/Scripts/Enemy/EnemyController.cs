@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
     private float _enemySlowlySpeed = default;
 
     [SerializeField, Header("敵の現在位置")]
-    private Vector2 _enemyPosition = default;
+    private Vector3 _enemyPosition;
 
     [SerializeField, Header("プレイヤーのゲームオブジェクト格納")]
     private GameObject _player = default;
@@ -44,30 +44,37 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Header("発射インターバル")]
     private float _shotInterval;
 
-    [SerializeField, Header("死亡演出用の数字")]
-    private Vector2 _deathSpeed = default;
+    //[SerializeField, Header("死亡演出用の数字")]
+    //private Vector2 _deathSpeed = default;
+
+    [SerializeField, Header("オブジェクトプールのスクリプトの中のリストを取得する")]
+    private List<Transform> _objPoolList = default;
 
     [SerializeField, Header("攻撃される弾のオブジェクト格納")]
-    private GameObject _receiveBullet = default;
+    private GameObject _receiveBullet;
 
-    [Header("敵の半径")]
-    public float _enemyRadius;
+    //[Header("敵の半径")]
+    //public float _enemyRadius;
 
-    [Header("攻撃される弾の半径")]
-    public float _bulletRadius = default;
+    [Header("当たり判定調整用変数")]
+    public float _hitArea;
 
-    [Header("当たり判定フラグ")]
-    private bool _hitFlag = default;
+    //[Header("当たり判定フラグ")]
+    //private bool _hitFlag = default;
+
+    [Header("中心位置からの距離の差")]
+    public Vector3 _v3Delta;
+
+    [Header("中心座標同士の距離の二乗")]
+    public float _fDistanceSq;
 
     /// <summary>
     /// 最初に読み込み
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         _enemyRd2b = this.GetComponent<Rigidbody2D>();
-        _enemyRadius = this.gameObject.transform.localScale.x / 2 ;
-        _bulletRadius = _receiveBullet.transform.localScale.x / 2 ;
-
+        _enemyPosition = this.gameObject.transform.localPosition;
     }
 
     /// <summary>
@@ -91,21 +98,22 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     public void EnemyOut()
     {
-        //trueが帰ってきたら実行
-        if (MakeCircleCollision.CircleCollider(_enemyPosition, _enemyRadius, _receiveBullet.transform.position, _bulletRadius))
-        {
-            _hitFlag = true;
-        } 
+        //_receiveBullet.transform.position = _objPoolList.
 
-        if(_hitFlag == true)
+        //ここから下で当たり判定の処理
+        _v3Delta = _enemyPosition - _receiveBullet.transform.position;
+
+        _fDistanceSq = _v3Delta.x * _v3Delta.x +
+                       _v3Delta.y * _v3Delta.y;
+
+        if (_fDistanceSq < (_hitArea * _hitArea))
         {
-            Debug.Log("当たっているよ！");
-            _deleteTime += Time.deltaTime;
-            this.transform.localScale = -_deathSpeed * _deleteTime;
+            Debug.Log("当たっているよ");
+            this.gameObject.SetActive(false);
         }
         else
         {
-            Debug.Log("この表示がされたらエラー");
+            Debug.Log("当たっていないか、弾が発射されていないか、エラーだよ");
         }
     }
 
@@ -138,12 +146,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    //デバッグ用update
     public void Update()
     {
-        Debug.Log(_enemyRadius);
-        Debug.Log(_bulletRadius);
-
-        Debug.Log(MakeCircleCollision.CircleCollider(_enemyPosition, _enemyRadius, _receiveBullet.transform.position, _bulletRadius));
+        
+        Debug.Log(_receiveBullet.transform.position);
+        Debug.Log(_enemyPosition);
+        Debug.Log(_fDistanceSq);
     }
 
 

@@ -13,6 +13,12 @@ public class GameController : MonoBehaviour
     [SerializeField, Header("EnemyBulletControllerの格納")]
     private EnemyBulletController _eBc = default;
 
+    [SerializeField, Header("オブジェクトプールの格納")]
+    private ObjectPool _objPoolScript = default;
+
+    [SerializeField, Header("オブジェクトプールの格納2")]
+    private GameObject _objPool = default;
+
     /// <summary>
     /// ここで他のスクリプトの挙動を管理
     /// </summary>
@@ -21,6 +27,7 @@ public class GameController : MonoBehaviour
         //プレイヤーの移動のメソッド呼び出し
         _pC.PlayerInput();
 
+        //敵が攻撃を受けた時の処理
         _eC.EnemyOut();
     }
 
@@ -45,7 +52,10 @@ public class GameController : MonoBehaviour
         _eBc.EnemyBulletMove1();
 
         //敵が攻撃する際の弾の配置
-        _eC.Enemyshot();       
+        _eC.Enemyshot();
+
+        //リストの更新
+        _objPoolScript.BulletPos[0] = _objPool.transform.GetChild(0);
 
     }
 }

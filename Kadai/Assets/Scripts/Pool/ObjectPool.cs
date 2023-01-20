@@ -14,6 +14,12 @@ public class ObjectPool : MonoBehaviour
     [SerializeField, Header("初期生成数")]
     private int _firstCount = default;
 
+    [Header("リストの中身の確認")]
+    public int[] intArray; 
+
+    [SerializeField, Header("オブジェクトプールのリスト変数")]
+    public List<Transform> BulletPos = new List<Transform>();
+
     /// <summary>
     /// 弾丸のオブジェクトプール
     /// </summary>
@@ -21,8 +27,8 @@ public class ObjectPool : MonoBehaviour
     {
         for(int i = 0; i < _firstCount; i++)
         {
-            //初期生成
-            Instantiate(_generateObject, Vector3.zero, Quaternion.identity, this.transform);
+            //初期生成しつつリストに追加
+            BulletPos.Add(Instantiate(_generateObject, Vector3.zero, Quaternion.identity, this.transform).transform);
         }
 
         //生成されたときに以下の状態になる
@@ -33,7 +39,6 @@ public class ObjectPool : MonoBehaviour
         }
 
     }
-
     /// <summary>
     /// オブジェクトプールからオブジェクトを見つける
     /// </summary>

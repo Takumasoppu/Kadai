@@ -25,12 +25,14 @@ public class MakeCircleCollision : MonoBehaviour
         float _sumRadius = _receiveObjRadius + _hitObjRadius;
 
         // 距離と半径の和を比較して、半径の和の方が大きいなら接触している
-        if (_sumSquaredPos <= _sumRadius + _sumRadius)
+        if (_sumSquaredPos < _sumRadius + _sumRadius)
         {
             return true;
         }
 
         return false;
     }
+
+    
 
 }

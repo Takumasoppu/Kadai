@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Header("発射インターバル")]
     private float _shotInterval;
 
-    [SerializeField, Header("プレイヤーの現在位置")]
+    //プレイヤーの現在位置
     private Vector2 _playerPos;
 
     //RigidBody格納
