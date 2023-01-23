@@ -8,8 +8,8 @@ public class GameController : MonoBehaviour
     private PlayerController _pC = default;
 
     [SerializeField, Header("EnemyControllerの格納")]
-    private EnemyController _eC = default;
-
+    private  EnemyController _eC = default;
+    
     [SerializeField, Header("EnemyBulletControllerの格納")]
     private EnemyBulletController _eBc = default;
 
@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
 
         //敵が攻撃を受けた時の処理
         _eC.EnemyOut();
+     
     }
 
     /// <summary>
@@ -48,14 +49,12 @@ public class GameController : MonoBehaviour
         //現在のプレイヤーのポジション
         _pC.NowPlayerPosition();
 
-        //敵の攻撃
-        _eBc.EnemyBulletMove1();
+        //現在の敵のポジション
+        _eC.NowEnemyPosition();
 
         //敵が攻撃する際の弾の配置
         _eC.Enemyshot();
 
-        //リストの更新
-        _objPoolScript.BulletPos[0] = _objPool.transform.GetChild(0);
 
     }
 }

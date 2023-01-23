@@ -28,7 +28,7 @@ public class ObjectPool : MonoBehaviour
         for(int i = 0; i < _firstCount; i++)
         {
             //初期生成しつつリストに追加
-            BulletPos.Add(Instantiate(_generateObject, Vector3.zero, Quaternion.identity, this.transform).transform);
+            Instantiate(_generateObject, Vector3.zero, Quaternion.identity, this.transform);
         }
 
         //生成されたときに以下の状態になる

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /// <summary>
 /// これは全方位発射雑魚敵のスクリプトです。
 /// </summary>
@@ -24,7 +25,7 @@ public class EnemyController : MonoBehaviour
     private float _enemySlowlySpeed = default;
 
     [SerializeField, Header("敵の現在位置")]
-    private Vector3 _enemyPosition;
+    private Transform _enemyTranform;
 
     [SerializeField, Header("プレイヤーのゲームオブジェクト格納")]
     private GameObject _player = default;
@@ -38,20 +39,16 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Header("動ける時間")]
     private float _activeTime = default;
 
-    [SerializeField, Header("死ぬまでの時間")]
-    private float _deleteTime = default;
-
     [SerializeField, Header("発射インターバル")]
     private float _shotInterval;
+
+    float _nowTime = default;
 
     //[SerializeField, Header("死亡演出用の数字")]
     //private Vector2 _deathSpeed = default;
 
-    [SerializeField, Header("オブジェクトプールのスクリプトの中のリストを取得する")]
-    private List<Transform> _objPoolList = default;
-
-    [SerializeField, Header("攻撃される弾のオブジェクト格納")]
-    private GameObject _receiveBullet;
+    [SerializeField, Header("攻撃される弾のオブジェクトプール格納")]
+    private GameObject _receiveBulletPool;
 
     //[Header("敵の半径")]
     //public float _enemyRadius;
@@ -59,8 +56,11 @@ public class EnemyController : MonoBehaviour
     [Header("当たり判定調整用変数")]
     public float _hitArea;
 
-    //[Header("当たり判定フラグ")]
-    //private bool _hitFlag = default;
+    [Header("初動停止確認フラグ")]
+    private bool _stopFlag = default;
+
+    [Header("敵死亡フラグ")]
+    private bool _deleteFlag = default;
 
     [Header("中心位置からの距離の差")]
     public Vector3 _v3Delta;
@@ -74,7 +74,6 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         _enemyRd2b = this.GetComponent<Rigidbody2D>();
-        _enemyPosition = this.gameObject.transform.localPosition;
     }
 
     /// <summary>
@@ -90,6 +89,7 @@ public class EnemyController : MonoBehaviour
         if (_activeTime > _stopTime)
         {
             _enemyRd2b.velocity = new Vector2(_enemySpeedx * 0, _enemySlowlySpeed);
+            _stopFlag = true;
         }
     }
 
@@ -98,18 +98,25 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     public void EnemyOut()
     {
-        //_receiveBullet.transform.position = _objPoolList.
 
-        //ここから下で当たり判定の処理
-        _v3Delta = _enemyPosition - _receiveBullet.transform.position;
+        //敵とプレイヤーが撃った弾の距離
+        _v3Delta = _enemyTranform.position - _receiveBulletPool.transform.GetChild(0).position;
 
+        //それぞれの距離を二乗
         _fDistanceSq = _v3Delta.x * _v3Delta.x +
                        _v3Delta.y * _v3Delta.y;
 
         if (_fDistanceSq < (_hitArea * _hitArea))
         {
+            _deleteFlag = true;
+
             Debug.Log("当たっているよ");
+
             this.gameObject.SetActive(false);
+
+            //プレイヤーのオブジェクトプールの子オブジェクトを非アクティブにする
+            _receiveBulletPool.transform.GetChild(0).gameObject.SetActive(false);
+          
         }
         else
         {
@@ -118,41 +125,62 @@ public class EnemyController : MonoBehaviour
     }
 
     /// <summary>
+    /// 現在の敵のポジション
+    /// </summary>
+    public void NowEnemyPosition()
+    {
+        _enemyTranform = this.gameObject.transform;
+    }
+
+    /// <summary>
     /// 敵とプレイヤーの角度を求める
     /// </summary>
     /// <returns></returns>
     public float AimFloat()
     {
-        float _xKyori = _player.transform.position.x - _enemyPosition.x ;
-        float _yKyori = _player.transform.position.y - _enemyPosition.y ;
+        float _xKyori = _player.transform.position.x - _enemyTranform.position.x ;
+        float _yKyori = _player.transform.position.y - _enemyTranform.position.y ;
         return Mathf.Atan2(_xKyori, _yKyori);
     }
 
     /// <summary>
     /// 敵が攻撃してくる時の処理
     /// </summary>
-    public IEnumerator Enemyshot()
+    public void Enemyshot()
     {
-        while (true)
+        //フラグがオンになってから開始
+        if (_stopFlag == true && _deleteFlag == false)
         {
-            //オブジェクトプールで生成した弾を敵の少し下に配置
-            _enemyOp.GetObject().GetComponent<Transform>().position = new Vector2(_enemyPosition.x,_enemyPosition.y - 0.7f);
+            _nowTime += Time.deltaTime;
 
-            //弾が見えるようにする処理
-            _enemyOp.GetObject().SetActive(true);
-            _enemyOp.GetObject().GetComponent<SpriteRenderer>().enabled = true;
+            if (_nowTime > _shotInterval)
+            {
+                //オブジェクトプールで生成した弾を敵の少し下に配置
+                _enemyOp.GetObject().GetComponent<Transform>().position = new Vector2(_enemyTranform.position.x, _enemyTranform.position.y - 0.7f);
 
-            yield return new WaitForSeconds(_shotInterval);
+                //弾が見えるようにする処理
+                _enemyOp.GetObject().SetActive(true);
+                _enemyOp.GetObject().GetComponent<SpriteRenderer>().enabled = true;
+
+                _nowTime = 0;
+
+            }
+        }
+        else
+        {
+            return; 
         }
     }
 
     //デバッグ用update
     public void Update()
     {
-        
-        Debug.Log(_receiveBullet.transform.position);
-        Debug.Log(_enemyPosition);
+
+        Debug.Log(_receiveBulletPool.transform.position) ;
+        Debug.Log(_enemyTranform);
         Debug.Log(_fDistanceSq);
+        Debug.Log(_nowTime);
+        Debug.Log(_stopFlag);
     }
 
 

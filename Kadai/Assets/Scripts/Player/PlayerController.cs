@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
         _leftInput = Gamepad.current.leftStick.ReadValue();
     }
 
-
     /// <summary>
     /// プレイヤーの挙動(コントローラー)
     /// </summary>

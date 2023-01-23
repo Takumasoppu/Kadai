@@ -6,21 +6,24 @@ public class EnemyBulletController : MonoBehaviour
 {
     private Rigidbody2D _rd2d = default;
 
-    [SerializeField, Header("EnemyControllerを格納")]
-    private EnemyController _eC = default;
+    //[SerializeField, Header("EnemyControllerを格納")]
+    //private EnemyController _eC = default;
 
     [SerializeField, Header("弾の速度")]
     private float _enemyBulletSpeed = default;
 
+    private void Awake()
+    {
+        _rd2d = GetComponent<Rigidbody2D>();
+    }
+
     /// <summary>
     /// プレイヤーに向かって飛んでいく弾の処理
     /// </summary>
-    public void EnemyBulletMove1()
+    private void FixedUpdate()
     {
-        float baseDir = _eC.AimFloat();
-
-        _rd2d.velocity = new Vector2(baseDir - _enemyBulletSpeed, baseDir - _enemyBulletSpeed);
-        
+        _rd2d.velocity = new Vector2(0, _enemyBulletSpeed);
     }
+
 
 }
