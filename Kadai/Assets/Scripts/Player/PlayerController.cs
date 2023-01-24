@@ -15,6 +15,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Header("発射インターバル")]
     private float _shotInterval;
 
+    [SerializeField, Header("プレイヤーの移動速度調整用")]
+    private float _playerSpeed = default;
+
+    [SerializeField, Header("弾のダメージ")]
+    public int _bulletDamage = default;
+
     //プレイヤーの現在位置
     private Vector2 _playerPos;
 
@@ -46,7 +52,7 @@ public class PlayerController : MonoBehaviour
     public void PlayerMove()
     {
         //移動量
-        _rd2b.velocity = _leftInput * 5f;
+        _rd2b.velocity = _leftInput * _playerSpeed;
     }
 
     /// <summary>

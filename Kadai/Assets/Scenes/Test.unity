@@ -176,11 +176,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyOp: {fileID: 753060819}
+  _player: {fileID: 753144226}
+  _playerController: {fileID: 0}
   _enemySpeedx: -4
   _enemySpeedy: -5
   _enemySlowlySpeed: -0.3
   _enemyTranform: {fileID: 269871723}
-  _player: {fileID: 753144226}
   _enemyHp: 0
   _stopTime: 1
   _activeTime: 0
@@ -189,6 +190,7 @@ MonoBehaviour:
   _hitArea: 0.45
   _v3Delta: {x: 0, y: 0, z: 0}
   _fDistanceSq: 0
+  _deathPoint: {fileID: 0}
 --- !u!212 &269871722
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -253,6 +255,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &619042639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 619042640}
+  m_Layer: 0
+  m_Name: DeathPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &619042640
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619042639}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.111235, y: 5.0237527, z: -184.60153}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &753060817
 GameObject:
@@ -401,6 +433,8 @@ MonoBehaviour:
   _leftInput: {x: 0, y: 0}
   _oP: {fileID: 1200969807}
   _shotInterval: 0.06
+  _playerSpeed: 10
+  _bulletDamage: 1
 --- !u!50 &753144230
 Rigidbody2D:
   serializedVersion: 4
@@ -530,7 +564,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200969805}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 21.85, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -671,12 +705,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyOp: {fileID: 753060819}
+  _player: {fileID: 753144226}
+  _playerController: {fileID: 753144229}
   _enemySpeedx: 4
   _enemySpeedy: -5
   _enemySlowlySpeed: -0.3
   _enemyTranform: {fileID: 1528393450}
-  _player: {fileID: 753144226}
-  _enemyHp: 0
+  _enemyHp: 50
   _stopTime: 1
   _activeTime: 0
   _shotInterval: 0.5
@@ -684,6 +719,7 @@ MonoBehaviour:
   _hitArea: 0.45
   _v3Delta: {x: 0, y: 0, z: 0}
   _fDistanceSq: 0
+  _deathPoint: {fileID: 619042639}
 --- !u!1 &1680754133
 GameObject:
   m_ObjectHideFlags: 0

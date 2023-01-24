@@ -19,17 +19,19 @@ public class GameController : MonoBehaviour
     [SerializeField, Header("オブジェクトプールの格納2")]
     private GameObject _objPool = default;
 
+    //[SerializeField, Header("オブジェクトプールのリスト")]
+    //private List<Transform> BulletPos = new List<Transform>();
+
+    //敵が受ける弾の個数
+    int _recieveBulletCount = default;
+
     /// <summary>
     /// ここで他のスクリプトの挙動を管理
     /// </summary>
     private void Update()
     {
         //プレイヤーの移動のメソッド呼び出し
-        _pC.PlayerInput();
-
-        //敵が攻撃を受けた時の処理
-        _eC.EnemyOut();
-     
+        _pC.PlayerInput();   
     }
 
     /// <summary>
@@ -55,6 +57,7 @@ public class GameController : MonoBehaviour
         //敵が攻撃する際の弾の配置
         _eC.Enemyshot();
 
-
+        //敵が攻撃を受けた時の処理
+        _eC.EnemyOut();
     }
 }
