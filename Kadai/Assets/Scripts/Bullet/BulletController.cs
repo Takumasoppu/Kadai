@@ -6,12 +6,14 @@ public class BulletController : MonoBehaviour
 {
     Rigidbody2D _rd2b = default;
 
+
     /// <summary>
     /// 弾のRigidBodyを取得
     /// </summary>
     private void Awake()
     {
         _rd2b = GetComponent<Rigidbody2D>();
+         
     }
 
     /// <summary>
@@ -20,6 +22,7 @@ public class BulletController : MonoBehaviour
     private void FixedUpdate()
     {
         _rd2b.velocity = new Vector2(0, 20f);
+
     }
 
 

@@ -31,10 +31,13 @@ public class EnemyController : MonoBehaviour
     private float _enemySlowlySpeed = default;
 
     [SerializeField, Header("敵の現在位置")]
-    private Transform _enemyTranform;
+    public Transform _enemyTranform;
 
     [SerializeField, Header("敵のHP")]
-    private int _enemyHp = default;
+    public int _enemyHp = default;
+
+    [SerializeField, Header("弾のカウント")]
+    private int _bulletCount = default;
 
     [SerializeField, Header("停止までの時間")]
     private float _stopTime = default;
@@ -43,13 +46,13 @@ public class EnemyController : MonoBehaviour
     private float _activeTime = default;
 
     [SerializeField, Header("発射インターバル")]
-    private float _shotInterval;
+    private float _shotInterval = default;
 
     [SerializeField, Header("攻撃される弾のオブジェクトプール格納")]
-    private GameObject _receiveBulletPool;
+    private GameObject _receiveBulletPool = default;
 
     [Header("当たり判定調整用変数")]
-    public float _hitArea;
+    public float _hitArea = default;
 
     [Header("初動停止確認フラグ")]
     private bool _stopFlag = default;
@@ -58,10 +61,10 @@ public class EnemyController : MonoBehaviour
     private bool _deleteFlag = default;
 
     [Header("2つのオブジェクトの中心位置からの距離の差")]
-    public Vector3 _v3Delta;
+    public Vector3 _v3Delta = default;
 
     [Header("中心座標同士の距離の二乗")]
-    public float _fDistanceSq;
+    public float _fDistanceSq = default;
 
     [Header("ダメージフラグ")]
     private bool _damageFlag = default;
@@ -97,29 +100,34 @@ public class EnemyController : MonoBehaviour
     }
 
     /// <summary>
-    /// 敵を倒した時の演出
+    /// 敵を倒した時の処理
     /// </summary>
     public void EnemyOut()
     {
-        //for(int i = 0; i <  )
-        //敵とプレイヤーが撃った弾の距離
-        _v3Delta = _enemyTranform.position - _receiveBulletPool.transform.GetChild(0).position;
+       /* //敵とプレイヤーが撃った弾の距離
+        _v3Delta = _enemyTranform.position - _receiveBulletPool.transform.GetChild(_bulletCount).position;
 
         //それぞれの距離を二乗
         _fDistanceSq = _v3Delta.x * _v3Delta.x +
                        _v3Delta.y * _v3Delta.y;
 
         if (_fDistanceSq < (_hitArea * _hitArea))
-        {            
+        {
              //ダメージ計算
             _enemyHp = _enemyHp - _playerController._bulletDamage;
 
-            Debug.Log("当たっているよ");
-            
             //プレイヤーのオブジェクトプールの子オブジェクトを非アクティブにする
-            _receiveBulletPool.transform.GetChild(0).gameObject.SetActive(false);
-            _receiveBulletPool.transform.GetChild(0).position = _receiveBulletPool.transform.position;       
-        }
+            _receiveBulletPool.transform.GetChild(_bulletCount).gameObject.SetActive(false);
+
+            _receiveBulletPool.transform.GetChild(_bulletCount).position = _receiveBulletPool.transform.position;
+
+            _bulletCount++;
+        }*/
+
+        /*if()
+        {
+            _bulletCount = 0;
+        }*/
 
         if (_enemyHp < 0)
         {
@@ -129,10 +137,6 @@ public class EnemyController : MonoBehaviour
             this.gameObject.transform.position = _deathPoint.transform.position;
         }
 
-        //else
-        //{
-        //Debug.Log("当たっていないか、弾が発射されていないか、エラーだよ");
-        //}
     }
 
     /// <summary>
@@ -192,11 +196,8 @@ public class EnemyController : MonoBehaviour
         //Debug.Log(_fDistanceSq);
         //Debug.Log(_nowTime);
         //Debug.Log(_stopFlag);
-        
-        
-
-
-        Debug.Log(_enemyHp);
+        //Debug.Log(_enemyHp);
+        Debug.Log(_bulletCount);
     }
 
 

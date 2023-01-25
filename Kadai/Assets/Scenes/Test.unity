@@ -183,6 +183,7 @@ MonoBehaviour:
   _enemySlowlySpeed: -0.3
   _enemyTranform: {fileID: 269871723}
   _enemyHp: 0
+  _bulletCount: 0
   _stopTime: 1
   _activeTime: 0
   _shotInterval: 0.5
@@ -254,7 +255,7 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619042639
 GameObject:
@@ -284,7 +285,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &753060817
 GameObject:
@@ -315,7 +316,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &753060819
 MonoBehaviour:
@@ -416,7 +417,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &753144229
 MonoBehaviour:
@@ -568,7 +569,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1200969807
 MonoBehaviour:
@@ -669,7 +670,7 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1528393451
 Rigidbody2D:
@@ -709,9 +710,10 @@ MonoBehaviour:
   _playerController: {fileID: 753144229}
   _enemySpeedx: 4
   _enemySpeedy: -5
-  _enemySlowlySpeed: -0.3
+  _enemySlowlySpeed: 0
   _enemyTranform: {fileID: 1528393450}
   _enemyHp: 50
+  _bulletCount: 0
   _stopTime: 1
   _activeTime: 0
   _shotInterval: 0.5
