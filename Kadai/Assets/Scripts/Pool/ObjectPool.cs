@@ -14,11 +14,18 @@ public class ObjectPool : MonoBehaviour
     [SerializeField, Header("初期生成数")]
     private int _firstCount = default;
 
-    [Header("リストの中身の確認")]
-    public int[] intArray; 
 
-    [SerializeField, Header("オブジェクトプールのリスト変数")]
-    public List<Transform> BulletPos = new List<Transform>();
+    /// <summary>
+    /// 生成した弾の個数を格納する関数
+    /// </summary>
+    /// <returns></returns>
+    public int _getfirstCount()
+    {
+        return _firstCount;
+    }
+
+    [SerializeField, Header("生成した弾を格納")]
+    public GameObject[] Bullets;
 
     /// <summary>
     /// 弾丸のオブジェクトプール
@@ -28,7 +35,9 @@ public class ObjectPool : MonoBehaviour
         for(int i = 0; i < _firstCount; i++)
         {
             //初期生成しつつリストに追加
-            BulletPos.Add(Instantiate(_generateObject, Vector3.zero, Quaternion.identity, this.transform).transform);
+            GameObject InstanceObject=Instantiate(_generateObject, Vector3.zero, Quaternion.identity, this.transform);
+
+            Bullets[i] = InstanceObject;
         }
 
         //生成されたときに以下の状態になる

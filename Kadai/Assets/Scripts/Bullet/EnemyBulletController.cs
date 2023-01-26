@@ -6,9 +6,6 @@ public class EnemyBulletController : MonoBehaviour
 {
     private Rigidbody2D _rd2d = default;
 
-    //[SerializeField, Header("EnemyControllerを格納")]
-    //private EnemyController _eC = default;
-
     [SerializeField, Header("弾の速度")]
     private float _enemyBulletSpeed = default;
 
