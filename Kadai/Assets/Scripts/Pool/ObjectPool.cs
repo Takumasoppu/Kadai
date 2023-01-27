@@ -24,7 +24,7 @@ public class ObjectPool : MonoBehaviour
         return _firstCount;
     }
 
-    [SerializeField, Header("生成した弾を格納")]
+    [SerializeField, Header("生成した弾を格納(_firstCountと同じ数値にする)")]
     public GameObject[] Bullets;
 
     /// <summary>
@@ -34,9 +34,10 @@ public class ObjectPool : MonoBehaviour
     {
         for(int i = 0; i < _firstCount; i++)
         {
-            //初期生成しつつリストに追加
-            GameObject InstanceObject=Instantiate(_generateObject, Vector3.zero, Quaternion.identity, this.transform);
+            //GameObject型で生成
+            GameObject InstanceObject = Instantiate(_generateObject, Vector3.zero, Quaternion.identity, this.transform);
 
+            //生成したものを配列にいれる
             Bullets[i] = InstanceObject;
         }
 
@@ -47,10 +48,12 @@ public class ObjectPool : MonoBehaviour
             objectInPool.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
 
+
+
     }
 
     /// <summary>
-    /// オブジェクトプールからオブジェクトを見つける
+    /// オブジェクトプールから非アクティブのオブジェクトを見つける
     /// </summary>
     /// <returns>見つかったオブジェクト</returns>
     public GameObject GetObject()

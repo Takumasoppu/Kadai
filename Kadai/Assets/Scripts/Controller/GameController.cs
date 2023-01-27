@@ -7,17 +7,20 @@ public class GameController : MonoBehaviour
     [SerializeField, Header("PlayerControllerの格納")]
     private PlayerController _pC = default;
 
-    [SerializeField, Header("EnemyControllerの格納")]
-    private  EnemyController _eC = default;
+    [SerializeField, Header("1Wave目の敵格納")]
+    private  EnemyController[] _oneWaveEnemy = default;
     
-    [SerializeField, Header("EnemyBulletControllerの格納")]
-    private EnemyBulletController _eBc = default;
+    //[SerializeField, Header("EnemyBulletControllerの格納")]
+    //private EnemyBulletController _eBc = default;
 
     [SerializeField, Header("オブジェクトプールの格納")]
     private ObjectPool _objPoolScript = default;
 
     [SerializeField, Header("オブジェクトプールの格納2")]
     private GameObject _objPool = default;
+
+    [SerializeField, Header("1Wave終了フラグ")]
+    private bool _oneWaveEnd = default;
 
     /// <summary>
     /// ここで他のスクリプトの挙動を管理
@@ -27,8 +30,14 @@ public class GameController : MonoBehaviour
         //プレイヤーの移動のメソッド呼び出し
         _pC.PlayerInput();
 
-        //########################
-        _eC.ActiveObj();
+        _oneWaveEnemy[0].ActiveObj();
+
+        _oneWaveEnemy[1].ActiveObj();
+
+        //敵を倒した際の処理
+        _oneWaveEnemy[0].EnemyOut();
+
+        _oneWaveEnemy[1].EnemyOut();
 
     }
 
@@ -40,23 +49,33 @@ public class GameController : MonoBehaviour
         //プレイヤーの物理挙動
         _pC.PlayerMove();
 
-        //敵の物理挙動
-        _eC.EnemyMove();
-
         //攻撃のメソッド呼び出し
         _pC.Fire();
 
         //現在のプレイヤーのポジション
         _pC.NowPlayerPosition();
 
+
+        //##########[ 1Wave目の敵の処理 ]##############
+
+        //敵の物理挙動
+        _oneWaveEnemy[0].EnemyMove();
+
+        _oneWaveEnemy[1].EnemyMove();
+
         //現在の敵のポジション
-        _eC.NowEnemyPosition();
+        _oneWaveEnemy[0].NowEnemyPosition();
+
+        _oneWaveEnemy[1].NowEnemyPosition();
 
         //敵が攻撃する際の弾の配置
-        _eC.Enemyshot();
+        _oneWaveEnemy[0].Enemyshot();
 
-        //敵が攻撃を受けた時の処理
-        _eC.EnemyOut();
+        _oneWaveEnemy[1].Enemyshot();
+
+        
+
+
 
     }
 }

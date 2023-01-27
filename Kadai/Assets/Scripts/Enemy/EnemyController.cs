@@ -38,6 +38,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Header("敵を倒したときに敵が場外に行くようにするポジション")]
     private GameObject _deathPoint = default;
 
+    [SerializeField, Header("敵の弾のオブジェクトプール")]
+    private GameObject _enemyOpjPooling = default;
+
     [SerializeField, Header("オブジェクトプール")]
     private GameObject[] _bullets = new GameObject[0];
 
@@ -86,18 +89,24 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Header("敵の現在位置")]
     public Transform _enemyTranform;
 
+    [SerializeField, Header("発射角度")]
+    public float _enemyBulletRad = default;
+
+    [SerializeField, Header("敵の弾のカウント")]
+    public int _enemyBulletCount = default;
+
 
     //#############[ フラグ系 ]###############
 
     [Header("初動停止確認フラグ")]
-    private bool _stopFlag = default;
+    private bool _stopFlag = false;
 
     [Header("敵死亡フラグ")]
-    private bool _deleteFlag = default;
+    private bool _deleteFlag = false;
 
 
     /// <summary>
-    /// 最初に読み込み
+    /// 最初の読み込み（主に弾の格納）
     /// </summary>
     private void Start()
     {
@@ -122,7 +131,6 @@ public class EnemyController : MonoBehaviour
                 _activeBullets[_bulletCount] = _bullets[_bulletCount];
                 return;
             }
-            
         }
     }
 
@@ -161,19 +169,23 @@ public class EnemyController : MonoBehaviour
             _enemyHp = _enemyHp - _playerController._bulletDamage;
 
             //プレイヤーのオブジェクトプールの子オブジェクトを非アクティブにする
-            _activeBullets[_bulletCount].gameObject.SetActive(false);
+            //_activeBullets[_bulletCount].gameObject.SetActive(false);
+            _activeBullets[_bulletCount].GetComponent<SpriteRenderer>().enabled = false;
 
             //非アクティブになったら画面外にあるオブジェクトプールに戻る
             _activeBullets[_bulletCount].transform.position = _receiveBullet.transform.position;
+
         }
 
-        if (_enemyHp < 1)
+        //プレイヤーの攻撃ダメージが敵のHPを超えたら
+        if (_enemyHp < _playerController._bulletDamage)
         {
             //敵を見えなくする
             this.gameObject.SetActive(false);
 
             //倒されたときに対象のポイントに移動する
             this.gameObject.transform.position = _deathPoint.transform.position;
+
         }
 
     }
@@ -209,19 +221,23 @@ public class EnemyController : MonoBehaviour
 
             if (_nowTime > _shotInterval)
             {
+
                 //オブジェクトプールで生成した弾を敵の少し下に配置
-                _enemyOp.GetObject().GetComponent<Transform>().position = new Vector2(_enemyTranform.position.x, _enemyTranform.position.y - 0.7f);
+                _enemyOp.GetObject().GetComponent<Transform>().position = new Vector2(_enemyTranform.position.x, _enemyTranform.position.y);
+
 
                 //弾が見えるようにする処理
                 _enemyOp.GetObject().SetActive(true);
                 _enemyOp.GetObject().GetComponent<SpriteRenderer>().enabled = true;
 
+
                 _nowTime = 0;
             }
+
         }
         else
         {
-            return; 
+            return;
         }
     }
 

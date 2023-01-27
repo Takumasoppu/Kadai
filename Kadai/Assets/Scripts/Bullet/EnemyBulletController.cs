@@ -19,7 +19,7 @@ public class EnemyBulletController : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        _rd2d.velocity = new Vector2(0, _enemyBulletSpeed);
+       _rd2d.velocity = new Vector2(0, _enemyBulletSpeed);
     }
 
 
