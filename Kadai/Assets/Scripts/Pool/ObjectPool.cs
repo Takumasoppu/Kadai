@@ -47,9 +47,6 @@ public class ObjectPool : MonoBehaviour
             objectInPool.gameObject.SetActive(false);
             objectInPool.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
-
-
-
     }
 
     /// <summary>

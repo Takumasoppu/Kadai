@@ -47,6 +47,14 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// プレイヤーが敵の弾に当たった時の処理
+    /// </summary>
+    public void PlayerHit()
+    {
+        //後でやる
+    }
+
+    /// <summary>
     /// プレイヤーの挙動(コントローラー)
     /// </summary>
     public void PlayerMove()
@@ -56,7 +64,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーの現在位置
+    /// プレイヤーの現在位置更新用
     /// </summary>
     public void NowPlayerPosition()
     {
