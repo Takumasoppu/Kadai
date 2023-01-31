@@ -14,10 +14,7 @@ public class GameController : MonoBehaviour
     private EnemyController[] _secondWaveEnemy = default;
 
     [SerializeField, Header("3Wave目の敵格納")]
-    private EnemyController[] _thirdWaveEnemy = default;
-
-    [SerializeField, Header("4Wave目の敵格納")]
-    private EnemyController[] _fourthWaveEnemy = default;
+    private EnemyController _finalWaveEnemy = default;
 
     [SerializeField, Header("オブジェクトプールの格納")]
     private ObjectPool _objPoolScript = default;
@@ -32,12 +29,6 @@ public class GameController : MonoBehaviour
     private bool _secondWave = false;
 
     [Header("3Wave管理フラグ")]
-    private bool _thirdWave = false;
-
-    [Header("4Wave管理フラグ")]
-    private bool _fourthWave = false;
-
-    [Header("FinalWave管理フラグ")]
     private bool _finalWave = false;
 
     /// <summary>
@@ -74,6 +65,7 @@ public class GameController : MonoBehaviour
 
         }
 
+
         //##########[ 2Wave目の敵の処理 ]##############
 
         //2Wave開始
@@ -83,70 +75,33 @@ public class GameController : MonoBehaviour
 
             _secondWaveEnemy[1].ActiveObj();
 
-            _secondWaveEnemy[2].ActiveObj();
-
         }
+
         //配列内の敵がすべて見えなくなったら(倒されたら) 2Wave目を終了して3Wave目をスタートする
         if (_secondWaveEnemy[0].GetComponent<SpriteRenderer>().enabled == false &&
-           _secondWaveEnemy[1].GetComponent<SpriteRenderer>().enabled == false &&
-           _secondWaveEnemy[2].GetComponent<SpriteRenderer>().enabled == false &&
-           _secondWave == true)
+            _secondWaveEnemy[1].GetComponent<SpriteRenderer>().enabled == false &&
+            _secondWave == true)
         {
             //2Wave目終了
             _secondWave = false;
 
             //3Wave目スタート
-            _thirdWave = true;
+            _finalWave = true;
         }
 
 
         //##########[ 3Wave目の敵の処理 ]##############
 
-        //3Wave開始
-        if(_thirdWave == true)
+        //finalWave開始
+        if(_finalWave == true)
         {
-            _thirdWaveEnemy[0].ActiveObj();
-            _thirdWaveEnemy[1].ActiveObj();
-            _thirdWaveEnemy[2].ActiveObj();
-            _thirdWaveEnemy[3].ActiveObj();
+            _finalWaveEnemy.ActiveObj();
         }
 
         //配列内の敵がすべて見えなくなったら(倒されたら) 3Wave目を終了して4Wave目をスタートする
-        if (_thirdWaveEnemy[0].GetComponent<SpriteRenderer>().enabled == false &&
-           _thirdWaveEnemy[1].GetComponent<SpriteRenderer>().enabled == false &&
-           _thirdWaveEnemy[2].GetComponent<SpriteRenderer>().enabled == false &&
-           _thirdWaveEnemy[3].GetComponent<SpriteRenderer>().enabled == false &&
-           _thirdWave == true)
+        if (_finalWaveEnemy.GetComponent<SpriteRenderer>().enabled == false)
         {
-            _thirdWave = false;
-
-            _fourthWave = true;
-        }
-
-
-        //##########[ 4Wave目の敵の処理 ]##############
-
-        if(_fourthWave == true)
-        {
-            _fourthWaveEnemy[0].ActiveObj();
-
-            _fourthWaveEnemy[1].ActiveObj();
-
-            _fourthWaveEnemy[2].ActiveObj();
-
-            _fourthWaveEnemy[3].ActiveObj();
-        }
-
-        //配列内の敵がすべて見えなくなったら(倒されたら) 4Wave目を終了してfinalWaveをスタートする
-        if (_fourthWaveEnemy[0].GetComponent<SpriteRenderer>().enabled == false &&
-            _fourthWaveEnemy[1].GetComponent<SpriteRenderer>().enabled == false &&
-            _fourthWaveEnemy[2].GetComponent<SpriteRenderer>().enabled == false &&
-            _fourthWaveEnemy[3].GetComponent<SpriteRenderer>().enabled == false &&
-            _fourthWave == true)
-        {
-            _fourthWave = false;
-
-            _finalWave = true;
+            _finalWave = false;
         }
     }
 
@@ -189,8 +144,8 @@ public class GameController : MonoBehaviour
             _firstWaveEnemy[0].EnemyOut();
 
             _firstWaveEnemy[1].EnemyOut();
-        }
 
+        }
 
         //##########[  2Wave目の敵の処理  ]##############
 
@@ -201,15 +156,11 @@ public class GameController : MonoBehaviour
 
             _secondWaveEnemy[1].EnemyMove();
 
-            _secondWaveEnemy[2].EnemyMove();
-
 
             //2Wave目の敵のポジションの更新
             _secondWaveEnemy[0].NowEnemyPosition();
 
             _secondWaveEnemy[1].NowEnemyPosition();
-
-            _secondWaveEnemy[2].NowEnemyPosition();
 
 
             //2Wave目の敵が攻撃する際の弾の配置
@@ -217,104 +168,25 @@ public class GameController : MonoBehaviour
 
             _secondWaveEnemy[1].EnemyShot();
 
-            _secondWaveEnemy[2].EnemyShot();
-
-
+            
             //2Wave目の敵が倒されたときの処理
             _secondWaveEnemy[0].EnemyOut();
 
             _secondWaveEnemy[1].EnemyOut();
-
-            _secondWaveEnemy[2].EnemyOut();
-
+           
         }
 
-        //##########[  3Wave目の敵の処理  ]##############
-        if(_thirdWave == true)
+        //##########[  finalWave目の敵の処理  ]##############
+        if(_finalWave == true)
         {
-            _thirdWaveEnemy[0].EnemyMove();
+            _finalWaveEnemy.EnemyMove();
 
-            _thirdWaveEnemy[1].EnemyMove();
+            _finalWaveEnemy.NowEnemyPosition();
 
-            _thirdWaveEnemy[2].EnemyMove();
+            _finalWaveEnemy.EnemyShot();
 
-            _thirdWaveEnemy[3].EnemyMove();
+            _finalWaveEnemy.EnemyOut();
 
-
-            _thirdWaveEnemy[0].NowEnemyPosition();
-
-            _thirdWaveEnemy[1].NowEnemyPosition();
-
-            _thirdWaveEnemy[2].NowEnemyPosition();
-
-            _thirdWaveEnemy[3].NowEnemyPosition();
-
-
-            _thirdWaveEnemy[0].EnemyShot();
-
-            _thirdWaveEnemy[1].EnemyShot();
-
-            _thirdWaveEnemy[2].EnemyShot();
-
-            _thirdWaveEnemy[3].EnemyShot();
-
-
-            _thirdWaveEnemy[0].EnemyOut();
-
-            _thirdWaveEnemy[1].EnemyOut();
-
-            _thirdWaveEnemy[2].EnemyOut();
-
-            _thirdWaveEnemy[3].EnemyOut();
-        }
-
-        //##########[  3Wave目の敵の処理  ]##############
-        if(_fourthWave == true)
-        {
-            //2Wave目の敵の挙動
-            _fourthWaveEnemy[0].EnemyMove();
-
-            _fourthWaveEnemy[1].EnemyMove();
-
-            _fourthWaveEnemy[2].EnemyMove();
-
-            _fourthWaveEnemy[3].EnemyMove();
-
-
-            //2Wave目の敵のポジションの更新
-            _fourthWaveEnemy[0].NowEnemyPosition();
-
-            _fourthWaveEnemy[1].NowEnemyPosition();
-
-            _fourthWaveEnemy[2].NowEnemyPosition();
-
-            _fourthWaveEnemy[3].NowEnemyPosition();
-
-
-            //2Wave目の敵が攻撃する際の弾の配置
-            _fourthWaveEnemy[0].EnemyShot();
-
-            _fourthWaveEnemy[1].EnemyShot();
-
-            _fourthWaveEnemy[2].EnemyShot();
-
-            _fourthWaveEnemy[3].EnemyShot();
-
-
-            //2Wave目の敵が倒されたときの処理
-            _fourthWaveEnemy[0].EnemyOut();
-
-            _fourthWaveEnemy[1].EnemyOut();
-
-            _fourthWaveEnemy[2].EnemyOut();
-
-            _fourthWaveEnemy[3].EnemyOut();
-        }
-
-        //##########[  FinalWaveの敵の処理  ]##############
-        if (_finalWave == true)
-        {
-
-        }
+        }  
     }
 }

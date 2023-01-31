@@ -4,17 +4,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// 雑魚敵のスクリプト
+/// 敵のスクリプト
 /// </summary>
 public class EnemyController : MonoBehaviour
 {
     //#############[ RigidBody ]###############
 
     [Header("敵のRigidbody")]
-    private Rigidbody2D _enemyRd2b = default;
+    private Rigidbody2D _enemyRb2d = default;
 
     [Header("敵の弾のRigidbody")]
-    private Rigidbody2D _bulletRd2b = default;
+    private Rigidbody2D _bulletRb2d = default;
 
     //#############[ 他 ]###############
 
@@ -26,9 +26,6 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField, Header("PlayerControllerの格納")]
     private PlayerController _playerController = default;
-
-    [SerializeField, Header("GameControllerの格納")]
-    private GameController _gameController = default;
 
 
     //#############[ GameObject系 ]###############
@@ -46,39 +43,36 @@ public class EnemyController : MonoBehaviour
     private GameObject _enemyOpjPooling = default;
 
     [SerializeField, Header("オブジェクトプール")]
-    private GameObject[] _EnemyBullets = new GameObject[0];
+    private GameObject[] _EnemyBullets = new GameObject[default];
 
     [SerializeField, Header("現在アクティブになっている弾を格納")]
-    private GameObject[] _activeBullets = new GameObject[0];
+    private GameObject[] _activeBullets = new GameObject[default];
 
 
     //#############[ 数値系 ]###############
 
-    //中心座標同士の距離の二乗
+    [Header("中心座標同士の距離の二乗")]
     private float _fDistanceSq = default;
 
-    //現在の時間経過
+    [Header("現在の時間経過")]
     private float _nowTime = default;
 
-    //弾のカウント
+    [Header("弾のカウント")]
     private int _bulletCount = default;
 
-    //2つのオブジェクトの中心位置からの距離の差
+    [Header("2つのオブジェクトの中心位置からの距離の差")]
     private Vector3 _v3Delta = default;
 
-    //敵の現在位置
+    [Header("敵の現在位置")]
     private Transform _enemyTranform;
 
-    //発射角度
+    [Header("発射角度")]
     private float _enemyBulletRad = default;
-
-    [SerializeField, Header("敵のHP")]
-    public int _enemyHp = default;
 
     [SerializeField, Header("停止までの時間")]
     private float _stopTime = default;
 
-    [SerializeField, Header("動ける時間")]
+    [Header("動ける時間")]
     private float _activeTime = default;
 
     [SerializeField, Header("発射インターバル")]
@@ -90,11 +84,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Header("敵が動く際のY方向のスピード")]
     private float _enemySpeedy = default;
 
-    [SerializeField, Header("敵が緩やかに下に移動する際のスピード")]
-    private float _enemySlowlySpeed = default;
-
     [Header("当たり判定調整用変数")]
     public float _hitArea = default;
+
+    [SerializeField, Header("敵のHP")]
+    public int _enemyHp = default;
 
 
     //#############[ フラグ系 ]###############
@@ -109,16 +103,15 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        _enemyRd2b = this.GetComponent<Rigidbody2D>();
+        _enemyRb2d = this.GetComponent<Rigidbody2D>();
 
-        _bulletRd2b = _enemyOpjPooling.GetComponent<Rigidbody2D>();
+        _bulletRb2d = _enemyOpjPooling.GetComponent<Rigidbody2D>();
 
         //オブジェクトプールで生成された分配列に格納
         for (int i = 0; i < _receiveBulletsPooling._getfirstCount(); i++)
         {
             _EnemyBullets[i] = _receiveBulletsPooling.Bullets[i];
         }
-
     }
 
     /// <summary>
@@ -146,19 +139,19 @@ public class EnemyController : MonoBehaviour
         _activeTime += Time.deltaTime;
 
         //敵の移動
-        _enemyRd2b.velocity = new Vector2(_enemySpeedx, _enemySpeedy);
+        _enemyRb2d.velocity = new Vector2(_enemySpeedx, _enemySpeedy);
 
-        //動ける時間を過ぎたら緩やかに下に移動する処理
+        //動ける時間を過ぎたら止まる処理
         if (_activeTime > _stopTime)
         {
-            _enemyRd2b.velocity = new Vector2(_enemySpeedx * 0, _enemySlowlySpeed);
+            _enemyRb2d.velocity = new Vector2(0, 0);
             _stopFlag = true;
         }
     }
 
 
     /// <summary>
-    /// 敵を倒した時の処理
+    /// 敵に弾が当たった時の処理 + 敵を倒した時の処理
     /// </summary>
     public void EnemyOut()
     {
@@ -196,11 +189,12 @@ public class EnemyController : MonoBehaviour
 
 
     /// <summary>
-    /// 現在の敵のポジション更新用
+    /// 現在の敵のポジション更新用メソッド
     /// </summary>
     public void NowEnemyPosition()
     {
         _enemyTranform = this.gameObject.transform;
+  
     }
 
     /// <summary>
@@ -216,7 +210,7 @@ public class EnemyController : MonoBehaviour
             if (_nowTime > _shotInterval)
             {
                 //オブジェクトプールで生成した弾を敵の少し下に配置
-                _enemyOp.GetObject().GetComponent<Transform>().position = new Vector2(_enemyTranform.position.x, _enemyTranform.position.y);
+                _enemyOp.GetObject().GetComponent<Transform>().position = new Vector2(_enemyTranform.position.x, _enemyTranform.position.y - 0.7f);
 
                 //弾が見えるようにする処理
                 _enemyOp.GetObject().SetActive(true);
@@ -249,18 +243,5 @@ public class EnemyController : MonoBehaviour
         float _yKyori = _player.transform.position.y - _enemyTranform.position.y ;
         return Mathf.Atan2(_xKyori, _yKyori);
     }*/
-
-    //デバッグ用update
-    public void Update()
-    {
-        //Debug.Log(_receiveBulletPool.transform.position) ;
-        //Debug.Log(_enemyTranform);
-        //Debug.Log(_fDistanceSq);
-        //Debug.Log(_nowTime);
-        //Debug.Log(_stopFlag);
-        //Debug.Log(_enemyHp);
-        //Debug.Log(_bulletCount);
-        //Debug.Log(_bullets.Length);
-    }
 
 }

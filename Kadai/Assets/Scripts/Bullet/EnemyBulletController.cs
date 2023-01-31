@@ -22,5 +22,14 @@ public class EnemyBulletController : MonoBehaviour
        _rd2d.velocity = new Vector2(0, _enemyBulletSpeed);
     }
 
+    //弾がプレイヤーに接触したときに自分を非アクティブにする
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.gameObject.tag == "Player")
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
+
 
 }
