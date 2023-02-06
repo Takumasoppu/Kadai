@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     //プレイヤーが死んだときのフラグ
     private bool _deleteFlag = default;
 
+    
     /// <summary>
     /// 最初の読み込み
     /// </summary>
@@ -57,8 +58,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PlayerInput()
     {
-        //左スティックから入力された値を読み取る
-        _leftInput = Gamepad.current.leftStick.ReadValue();
+        //死んでいなければ続行
+        if (_deleteFlag == false)
+        {
+            //左スティックから入力された値を読み取る
+            _leftInput = Gamepad.current.leftStick.ReadValue();
+        }
+        
     }
 
     /// <summary>
@@ -106,8 +112,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PlayerMove()
     {
-        //移動量
-        _rb2d.velocity = _leftInput * _playerSpeed;
+        //死んでいなければ続行
+        if (_deleteFlag == false)
+        {
+            //移動量
+            _rb2d.velocity = _leftInput * _playerSpeed;
+        }
     }
 
     /// <summary>
@@ -115,7 +125,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void NowPlayerPosition()
     {
-        _playerPos = this.transform.position;
+        //死んでいなければ続行
+        if (_deleteFlag == false)
+        {
+            _playerPos = this.transform.position;
+        }
     }
 
     /// <summary>
@@ -124,20 +138,24 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     public IEnumerator Fire()
     {
-        while (true)
+        //死んでいなければ続行
+        if (_deleteFlag == false)
         {
-            //コントローラーのBボタンを押したとき
-            if (Gamepad.current.buttonEast.isPressed)
+            while (true)
             {
-                //オブジェクトプールで生成した弾をプレイヤーの少し上に配置
-                _oP.GetObject().GetComponent<Transform>().position = new Vector2(_playerPos.x,_playerPos.y + 0.7f);
+                //コントローラーのBボタンを押したとき
+                if (Gamepad.current.buttonEast.isPressed)
+                {
+                    //オブジェクトプールで生成した弾をプレイヤーの少し上に配置
+                    _oP.GetObject().GetComponent<Transform>().position = new Vector2(_playerPos.x, _playerPos.y + 0.7f);
 
-                //弾が見えるようにする処理
-                _oP.GetObject().SetActive(true);
-                _oP.GetObject().GetComponent<SpriteRenderer>().enabled = true;
+                    //弾が見えるようにする処理
+                    _oP.GetObject().SetActive(true);
+                    _oP.GetObject().GetComponent<SpriteRenderer>().enabled = true;
 
+                }
+                yield return new WaitForSeconds(_shotInterval);
             }
-            yield return new WaitForSeconds(_shotInterval);
         }
 
     }

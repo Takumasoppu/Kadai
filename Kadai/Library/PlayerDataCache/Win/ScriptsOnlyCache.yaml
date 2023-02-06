@@ -2,10 +2,12 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - BulletController
+    - BulletReturn
+    - EnemyBulletController
+    - EnemyController
     - GameController
     - ObjectPool
     - PlayerController
-    - RetrunArea
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.Tilemap.Editor.dll:
@@ -40,20 +42,26 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 50
       Script: {instanceID: 0}
+    - Class: 58
+      Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 12486}
+      Script: {instanceID: 12492}
     - Class: 114
-      Script: {instanceID: 13260}
+      Script: {instanceID: 12732}
     - Class: 114
-      Script: {instanceID: 13786}
+      Script: {instanceID: 12822}
     - Class: 114
-      Script: {instanceID: 19640}
+      Script: {instanceID: 12862}
     - Class: 114
-      Script: {instanceID: 20410}
+      Script: {instanceID: 13274}
+    - Class: 114
+      Script: {instanceID: 13800}
+    - Class: 114
+      Script: {instanceID: 14596}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -152,6 +160,12 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SceneController
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: TestResultRendererCallback
@@ -229,7 +243,7 @@ ScriptsOnlyBuild:
     className: InputActionEditorWindow
   - hash:
       serializedVersion: 2
-      Hash: 50a2b4a9793ae97daf83244c3106e968
+      Hash: f7c4503f5ba6742b8e6df6ba18dd2772
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ObjectPool
@@ -295,16 +309,34 @@ ScriptsOnlyBuild:
     className: AnimationPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: 00d11d098fac86e3160c0acfcf051f59
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EnemyBulletController
+  - hash:
+      serializedVersion: 2
       Hash: aba7b2852ef61d175dd9602e7723d5e5
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Mask
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BulletReturn
+  - hash:
+      serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Shadow
+  - hash:
+      serializedVersion: 2
+      Hash: 3fd1a3d18acd8fa1edcd340544bd55cf
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BulletController
   - hash:
       serializedVersion: 2
       Hash: f17a7afbb6fc4d6b5c3ba20ed1c93f68
@@ -335,6 +367,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.SpriteShape.Runtime.dll
     namespaceName: UnityEngine.U2D
     className: SpriteShape
+  - hash:
+      serializedVersion: 2
+      Hash: 991602a950bf039494bb4e2105d8307c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AudioController
   - hash:
       serializedVersion: 2
       Hash: 5cc439bf63c0539d39588e69465ac2ab
@@ -373,7 +411,7 @@ ScriptsOnlyBuild:
     className: InputSettings
   - hash:
       serializedVersion: 2
-      Hash: 4a52c9e5b948c58bfed81e4f82dfe988
+      Hash: 963ebd7739daeec624585080d6e78a8c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameController
@@ -427,7 +465,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAnimator
   - hash:
       serializedVersion: 2
-      Hash: fdddf84bd605eb1219f3b47f230b2db9
+      Hash: aa4ccde61abef97ab2eff8b5901c50e8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -575,6 +613,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: TimelineAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 649f2173f66c3d26837af92ab6b7dd8c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EnemyController
   - hash:
       serializedVersion: 2
       Hash: 76aef43e801605d1829c8805eeee135c
@@ -731,19 +775,7 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: BulletController
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: RetrunArea
   platform: 5
   scenePathNames:
   - Assets/Scenes/Test.unity
-  playerPath: C:/Users/s20217025/Desktop/test/Kadai.exe
+  playerPath: C:/Users/s20217025/Desktop/ShootingGame/Kadai.exe
