@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -103,6 +104,16 @@ public class GameController : MonoBehaviour
         {
             _finalWave = false;
         }
+
+        //ゲームオーバー処理
+        _pC.DeletePlayer();
+
+        //クリア処理
+        if(_finalWaveEnemy.GetComponent<SpriteRenderer>().enabled == false)
+        {
+            SceneManager.LoadScene("Clear");
+        }
+        
     }
 
     /// <summary>

@@ -92,18 +92,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void DeletePlayer()
     {
-        _audioController.DeleteSound();
-
-        //コントローラーのYボタンを押したときにリトライできる
-        if(Gamepad.current.buttonNorth.isPressed )
+        if (_deleteFlag == true)
         {
-            SceneManager.LoadScene("Test");
-        }
-
-        //コントローラーのAボタンを押したときにタイトルに戻ることができる
-        if(Gamepad.current.buttonSouth.isPressed)
-        {
-            return;
+            SceneManager.LoadScene("Gameover");
         }
     }
 
